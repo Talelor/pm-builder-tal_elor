@@ -1,0 +1,729 @@
+{
+  "name": "Support Ticket Routing Agent - Complete",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [240, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 📋 STEP 1: Ticket Input\n\nManually input ticket data in JSON format.\n\nExpected fields:\n- ticket_id\n- subject\n- body\n- customer_id\n- account_tier\n- vip_flag\n- created_at\n- source",
+        "height": 240,
+        "width": 280
+      },
+      "id": "sticky-input",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [220, 180]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ticket_id",
+              "name": "ticket_id",
+              "value": "={{ $json.ticket_id }}",
+              "type": "string"
+            },
+            {
+              "id": "subject",
+              "name": "subject",
+              "value": "={{ $json.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "body",
+              "name": "body",
+              "value": "={{ $json.body }}",
+              "type": "string"
+            },
+            {
+              "id": "customer_id",
+              "name": "customer_id",
+              "value": "={{ $json.customer_id }}",
+              "type": "string"
+            },
+            {
+              "id": "account_tier",
+              "name": "account_tier",
+              "value": "={{ $json.account_tier }}",
+              "type": "string"
+            },
+            {
+              "id": "vip_flag",
+              "name": "vip_flag",
+              "value": "={{ $json.vip_flag }}",
+              "type": "boolean"
+            },
+            {
+              "id": "created_at",
+              "name": "created_at",
+              "value": "={{ $json.created_at }}",
+              "type": "string"
+            },
+            {
+              "id": "source",
+              "name": "source",
+              "value": "={{ $json.source }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "extract-ticket-data",
+      "name": "Extract Ticket Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 🔍 STEP 2: Extract & Validate\n\nExtracts ticket data from input and validates all required fields are present.\n\nOutputs clean ticket object for processing.",
+        "height": 200,
+        "width": 280
+      },
+      "id": "sticky-extract",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [440, 220]
+    },
+    {
+      "parameters": {
+        "text": "=Analyze this support ticket:\n\nTicket ID: {{ $json.ticket_id }}\nSubject: {{ $json.subject }}\nBody: {{ $json.body }}\nCustomer Tier: {{ $json.account_tier }}\nVIP Status: {{ $json.vip_flag }}\n\nWhat is the customer's primary need? What problem are they trying to solve? Provide a clear analysis of their intent.",
+        "options": {
+          "systemMessage": "You are a senior customer support analyst. Your job is to understand what customers really need from their support tickets, even when they're vague or unclear. Focus on identifying the core issue and customer intent."
+        }
+      },
+      "id": "ticket-analysis",
+      "name": "Ticket Analysis",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [680, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 🧠 STEP 3: Ticket Analysis\n\nAI analyzes the ticket to understand:\n- Customer's primary intent\n- Core problem/need\n- Context clues\n\nOutput: Analysis of what customer needs",
+        "height": 200,
+        "width": 280
+      },
+      "id": "sticky-analysis",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [660, 220]
+    },
+    {
+      "parameters": {
+        "inputText": "=Subject: {{ $json.subject }}\nBody: {{ $json.body }}\nAnalysis: {{ $json.output }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Engineering",
+              "description": "Technical issues, bugs, API errors, performance problems, integration failures, error messages"
+            },
+            {
+              "category": "Sales",
+              "description": "Pricing inquiries, plan comparisons, upgrade questions, demo requests, pre-purchase questions, volume discounts"
+            },
+            {
+              "category": "CustomerSuccess",
+              "description": "Onboarding help, feature questions, best practices, training, account strategy, how-to questions"
+            },
+            {
+              "category": "Billing",
+              "description": "Payment issues, invoice questions, refunds, plan changes, subscription management, charge disputes"
+            },
+            {
+              "category": "General",
+              "description": "Unclear requests, feedback, generic inquiries, non-specific help requests"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "team-classifier",
+      "name": "Team Classifier",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [900, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 🎯 STEP 4: Team Classification\n\nClassifies ticket into team categories:\n- Engineering (technical)\n- Sales (pricing/pre-purchase)\n- Customer Success (onboarding/training)\n- Billing (payment/invoices)\n- General (unclear)\n\nOutput: Suggested team",
+        "height": 220,
+        "width": 280
+      },
+      "id": "sticky-classifier",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [880, 200]
+    },
+    {
+      "parameters": {
+        "text": "=Evaluate the confidence in this classification:\n\nTicket Subject: {{ $('Extract Ticket Data').item.json.subject }}\nTicket Body: {{ $('Extract Ticket Data').item.json.body }}\nAnalysis: {{ $('Ticket Analysis').item.json.output }}\nClassified Team: {{ $json.category }}\n\nHow confident are you in this classification? Return ONLY a number between 0.0 (not confident at all) and 1.0 (extremely confident).\n\nConsider:\n- Is the ticket clear and specific? (higher confidence)\n- Are there ambiguous elements? (lower confidence)\n- Could this fit multiple teams? (lower confidence)\n- Are there clear keywords and context? (higher confidence)\n\nReturn only the number, no explanation.",
+        "options": {
+          "systemMessage": "You are a classification confidence evaluator. Return only a decimal number between 0.0 and 1.0 representing confidence. Be conservative - when uncertain, return lower scores."
+        }
+      },
+      "id": "confidence-assessment",
+      "name": "Confidence Assessment",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [1120, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 📊 STEP 5: Confidence Score\n\nAI evaluates confidence (0.0-1.0) in the classification based on:\n- Ticket clarity\n- Ambiguity level\n- Evidence strength\n\nOutput: Confidence score",
+        "height": 200,
+        "width": 280
+      },
+      "id": "sticky-confidence",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1100, 220]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "vip-check",
+              "leftValue": "={{ $('Extract Ticket Data').item.json.vip_flag }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "true"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "vip-detection",
+      "name": "VIP Detection",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [1340, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 👑 STEP 6: VIP Detection\n\nChecks if customer is VIP:\n- If VIP + confidence < 0.6 → Flag for special handling\n- If VIP → Set high priority\n- If not VIP → Continue normal flow\n\nOutput: VIP override flag",
+        "height": 220,
+        "width": 280
+      },
+      "id": "sticky-vip",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1320, 200]
+    },
+    {
+      "parameters": {
+        "text": "=Analyze this ticket for multiple topics:\n\nSubject: {{ $('Extract Ticket Data').item.json.subject }}\nBody: {{ $('Extract Ticket Data').item.json.body }}\nPrimary Team: {{ $('Team Classifier').item.json.category }}\n\nAre there secondary issues or topics mentioned beyond the primary one? If yes, list them as a comma-separated list. If no, return \"none\".\n\nExamples:\n- \"refund, API issue\" (if ticket requests refund AND mentions API problem)\n- \"billing question, account setup\" (if about billing AND account help)\n- \"none\" (if only one clear topic)",
+        "options": {
+          "systemMessage": "You are a multi-topic detector. Identify if a support ticket contains multiple distinct issues. Return comma-separated list or 'none'."
+        }
+      },
+      "id": "multi-topic-handling",
+      "name": "Multi-Topic Handling",
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [1560, 500]
+    },
+    {
+      "parameters": {
+        "content": "## 📝 STEP 7: Multi-Topic Detection\n\nIdentifies if ticket has multiple issues:\n- Primary topic (already classified)\n- Secondary topics (additional issues)\n\nOutput: Array of secondary topics",
+        "height": 180,
+        "width": 280
+      },
+      "id": "sticky-multitopic",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1540, 640]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "rules": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Extract Ticket Data').item.json.body.toLowerCase() }}",
+                    "rightValue": "production down",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "or"
+              },
+              "renameOutput": true,
+              "outputKey": "critical"
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict"
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('Extract Ticket Data').item.json.body.toLowerCase() }}",
+                    "rightValue": "urgent",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "or"
+              },
+              "renameOutput": true,
+              "outputKey": "high"
+            }
+          ]
+        },
+        "options": {
+          "fallbackOutput": "extra",
+          "allMatchingOutputs": false
+        },
+        "fallbackOutput": "normal"
+      },
+      "id": "priority-assignment",
+      "name": "Priority Assignment",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [1780, 500]
+    },
+    {
+      "parameters": {
+        "content": "## ⚡ STEP 8: Priority Detection\n\nAssigns priority based on:\n- **Critical**: production down, all users affected, security\n- **High**: blocking, SLA breach, VIP customer\n- **Normal**: everything else\n\nOutput: Priority level",
+        "height": 200,
+        "width": 280
+      },
+      "id": "sticky-priority",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1760, 640]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "confidence-threshold",
+              "leftValue": "={{ parseFloat($('Confidence Assessment').item.json.output) }}",
+              "rightValue": 0.7,
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "route-decision",
+      "name": "Route Decision",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [2000, 400]
+    },
+    {
+      "parameters": {
+        "content": "## 🎯 STEP 9: Final Routing Decision\n\nDecides final team assignment:\n- If confidence ≥ 0.7 → Route to classified team\n- If confidence < 0.7 → Route to ManualReview\n- VIP + confidence < 0.6 → ManualReview\n\nOutput: Final team assignment",
+        "height": 220,
+        "width": 280
+      },
+      "id": "sticky-route",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [1980, 200]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ticket_id",
+              "name": "ticket_id",
+              "value": "={{ $('Extract Ticket Data').item.json.ticket_id }}",
+              "type": "string"
+            },
+            {
+              "id": "assigned_team",
+              "name": "assigned_team",
+              "value": "={{ $('Team Classifier').item.json.category }}",
+              "type": "string"
+            },
+            {
+              "id": "confidence",
+              "name": "confidence",
+              "value": "={{ parseFloat($('Confidence Assessment').item.json.output) }}",
+              "type": "number"
+            },
+            {
+              "id": "reasoning",
+              "name": "reasoning",
+              "value": "=Ticket classified as {{ $('Team Classifier').item.json.category }} based on: {{ $('Ticket Analysis').item.json.output.substring(0, 200) }}",
+              "type": "string"
+            },
+            {
+              "id": "priority",
+              "name": "priority",
+              "value": "={{ $runIndex === 0 ? 'critical' : $runIndex === 1 ? 'high' : 'normal' }}",
+              "type": "string"
+            },
+            {
+              "id": "vip_override",
+              "name": "vip_override",
+              "value": "={{ $('Extract Ticket Data').item.json.vip_flag }}",
+              "type": "boolean"
+            },
+            {
+              "id": "secondary_topics",
+              "name": "secondary_topics",
+              "value": "={{ $('Multi-Topic Handling').item.json.output === 'none' ? [] : $('Multi-Topic Handling').item.json.output.split(',').map(t => t.trim()) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "format-high-confidence",
+      "name": "Format Response (High Confidence)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2220, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ticket_id",
+              "name": "ticket_id",
+              "value": "={{ $('Extract Ticket Data').item.json.ticket_id }}",
+              "type": "string"
+            },
+            {
+              "id": "assigned_team",
+              "name": "assigned_team",
+              "value": "ManualReview",
+              "type": "string"
+            },
+            {
+              "id": "confidence",
+              "name": "confidence",
+              "value": "={{ parseFloat($('Confidence Assessment').item.json.output) }}",
+              "type": "number"
+            },
+            {
+              "id": "reasoning",
+              "name": "reasoning",
+              "value": "=Low confidence ({{ parseFloat($('Confidence Assessment').item.json.output) }}). Escalating to manual review for human assessment. Original suggestion: {{ $('Team Classifier').item.json.category }}",
+              "type": "string"
+            },
+            {
+              "id": "priority",
+              "name": "priority",
+              "value": "={{ $('Extract Ticket Data').item.json.vip_flag ? 'high' : 'normal' }}",
+              "type": "string"
+            },
+            {
+              "id": "vip_override",
+              "name": "vip_override",
+              "value": "={{ $('Extract Ticket Data').item.json.vip_flag }}",
+              "type": "boolean"
+            },
+            {
+              "id": "secondary_topics",
+              "name": "secondary_topics",
+              "value": "={{ $('Multi-Topic Handling').item.json.output === 'none' ? [] : $('Multi-Topic Handling').item.json.output.split(',').map(t => t.trim()) }}",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "format-low-confidence",
+      "name": "Format Response (Manual Review)",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [2220, 500]
+    },
+    {
+      "parameters": {
+        "content": "## 📤 STEP 10: Format Response\n\nFormats complete JSON response:\n- ticket_id\n- assigned_team\n- confidence\n- reasoning\n- priority\n- vip_override\n- secondary_topics\n\nReady for output!",
+        "height": 220,
+        "width": 320
+      },
+      "id": "sticky-format",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [2200, 100]
+    },
+    {
+      "parameters": {
+        "model": {
+          "mode": "id",
+          "value": "gpt-4o"
+        },
+        "options": {}
+      },
+      "id": "openai-model",
+      "name": "OpenAI GPT-4",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [900, 640],
+      "credentials": {
+        "openAiApi": {
+          "id": "openai-credentials",
+          "name": "OpenAI Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 🤖 AI Model\n\nOpenAI GPT-4 powers:\n- Ticket Analysis\n- Confidence Assessment\n- Multi-Topic Detection\n\nShared across multiple AI nodes",
+        "height": 180,
+        "width": 260,
+        "color": 5
+      },
+      "id": "sticky-ai-model",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [880, 780]
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Extract Ticket Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Ticket Data": {
+      "main": [
+        [
+          {
+            "node": "Ticket Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ticket Analysis": {
+      "main": [
+        [
+          {
+            "node": "Team Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI GPT-4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Team Classifier": {
+      "main": [
+        [
+          {
+            "node": "Confidence Assessment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI GPT-4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confidence Assessment": {
+      "main": [
+        [
+          {
+            "node": "VIP Detection",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI GPT-4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "VIP Detection": {
+      "main": [
+        [
+          {
+            "node": "Multi-Topic Handling",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Multi-Topic Handling",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Multi-Topic Handling": {
+      "main": [
+        [
+          {
+            "node": "Priority Assignment",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ],
+      "ai_languageModel": [
+        [
+          {
+            "node": "OpenAI GPT-4",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Priority Assignment": {
+      "main": [
+        [
+          {
+            "node": "Route Decision",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route Decision",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Route Decision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Decision": {
+      "main": [
+        [
+          {
+            "node": "Format Response (High Confidence)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Format Response (Manual Review)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2026-01-05T00:00:00.000Z",
+      "updatedAt": "2026-01-05T00:00:00.000Z",
+      "id": "1",
+      "name": "AI"
+    },
+    {
+      "createdAt": "2026-01-05T00:00:00.000Z",
+      "updatedAt": "2026-01-05T00:00:00.000Z",
+      "id": "2",
+      "name": "Support"
+    },
+    {
+      "createdAt": "2026-01-05T00:00:00.000Z",
+      "updatedAt": "2026-01-05T00:00:00.000Z",
+      "id": "3",
+      "name": "Classification"
+    }
+  ],
+  "meta": {
+    "instanceId": "n8n-instance"
+  },
+  "id": "support-ticket-routing-agent-complete",
+  "versionId": "1"
+}
