@@ -9,9 +9,10 @@ description: Generates Agent PRD and Prompt Engineering Template from Pre-PRD fi
 
 **CRITICAL: Use Write tool to save documents as .md files. DO NOT output to chat.**
 
-This skill generates two specification documents from a Pre-PRD file:
+This skill generates three specification documents from a Pre-PRD file:
 1. Agent PRD
 2. Prompt Engineering Template
+3. Agent Capabilities (extracted from Prompt)
 
 ## How it Works
 
@@ -40,8 +41,18 @@ This skill generates two specification documents from a Pre-PRD file:
    - Section 8-10: Examples, Special Considerations, Validation
 8. Document complete: `{AgentName}-Prompt.md`
 
-### Phase 3: Report Completion
-9. Report completion with file paths
+### Phase 3: Agent Capabilities File Generation
+9. Read the generated Prompt file to extract capabilities
+10. Create capabilities document with Write tool
+11. Extract each capability from Instructions section and format as:
+    - Each capability becomes a numbered section (# 1, # 2, etc.)
+    - Use capability name as ## heading
+    - List all sub-steps/instructions as bullet points
+    - Maintain order from original prompt
+12. Document complete: `{AgentName}-Capabilities.md`
+
+### Phase 4: Report Completion
+13. Report completion with file paths for all 3 files
 
 ## Parameters
 
@@ -50,9 +61,10 @@ This skill generates two specification documents from a Pre-PRD file:
 
 ## Output
 
-Creates 2 files:
+Creates 3 files:
 - `{AgentName}.md` - Agent PRD
 - `{AgentName}-Prompt.md` - Prompt Engineering Template
+- `{AgentName}-Capabilities.md` - Agent Capabilities (extracted from Prompt)
 
 ## Requirements
 
@@ -97,3 +109,24 @@ Creates 2 files:
 - **Section 6 (Output Format):** Derive from Part 3 (Solution Approach)
 - **Section 7 (Quality):** Use Part 5 (Quality Requirements)
 - **Sections 8-10 (Examples/Considerations/Validation):** Use Part 3.4 (LLM Considerations)
+
+### Capabilities File Extraction Guidelines:
+- **Source:** Extract from "## Instructions" section of the generated Prompt file
+- **Format:** Each numbered instruction becomes a separate section
+- **Structure:**
+  ```
+  # 1
+  ## [Capability Name]
+  - [Sub-step 1]
+  - [Sub-step 2]
+  ...
+
+  # 2
+  ## [Next Capability Name]
+  - [Sub-step 1]
+  ...
+  ```
+- **Naming:** Extract capability name from first line of instruction (e.g., "1. **Classify Ticket Category:**" becomes "## Classify Ticket Category")
+- **Content:** Preserve all bullet points and sub-instructions exactly as they appear
+- **Order:** Maintain the same sequence as in the Prompt file
+- **Purpose:** This file allows isolated review and testing of individual capabilities

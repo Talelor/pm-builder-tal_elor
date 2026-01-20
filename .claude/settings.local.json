@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(agent-spec-generator)",
+      "Skill(agent-spec-generator:*)"
+    ]
+  }
+}

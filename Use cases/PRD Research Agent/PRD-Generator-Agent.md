@@ -1,39 +1,20 @@
-# PRD Generator Agent - Agent PRD
+# PRD Generator Agent - Product Requirements Document
 
-## 1. Agent Overview & Purpose
+---
 
-### 1.1 Agent Identity
-- **Agent Name:** PRD Generator Agent
-- **Agent Type:** Hybrid (Generative, Analytical, Conversational)
-- **Version:** 1.0
-- **Domain Focus:** B2C applications, specifically public transit navigation apps (e.g., Google Maps, Moovit)
+## 1. Agent Overview
 
-### 1.2 Problem Statement
-Product Managers spend significant time gathering fragmented inputs (market research, user needs, competitive landscape, internal constraints) before writing a PRD. This process is:
-- Manual and time-consuming
-- Inconsistent across teams
-- Often biased by incomplete or outdated data
-- Creates slower product discovery cycles
-- Results in misalignment between stakeholders early in the process
+### 1.1 Purpose Statement
 
-The agent solves this by automating structured market research, user discovery, and solution framing to generate high-quality PRD drafts in minutes.
+**Primary Goal:** Generate high-quality, structured Product Requirement Document (PRD) drafts by performing market research, user discovery, and solution framing to accelerate product decision-making.
 
-### 1.3 Target Users
+**Problem It Solves:** Product Managers spend significant time gathering fragmented inputs (market research, user needs, competitive landscape, and internal constraints) before writing a PRD. This process is manual, inconsistent, and often biased by incomplete data, leading to slower discovery cycles, inconsistent PRD quality, and decisions based on partial or outdated market insights.
 
-| User Type | Role | Frequency | Expertise | Key Needs |
-|-----------|------|-----------|-----------|-----------|
-| Product Manager | Feature owner | Weekly | Medium | Fast PRD creation, market insights |
-| Product Lead | Strategy & review | Weekly | Medium | Consistency, clarity, comparability |
-| UX Researcher | Discovery support | Ad-hoc | Medium | User context, assumptions |
-| Engineering Lead | Feasibility review | Ad-hoc | High | Clear requirements, scope |
-
-### 1.4 Success Definition
-PMs can generate a high-quality, structured PRD draft in minutes, grounded in current market data and clear user context, enabling faster and more confident product decisions. Specifically:
-- PRD requires minimal edits
-- Stakeholders understand problem & solution clearly
-- Faster approval to move into delivery
-- PRD sections are accepted without changes
-- Reduction in discovery cycle time
+**Success Criteria:**
+- **Metric 1:** PRD draft generated in <5 minutes vs hours for manual process
+- **Metric 2:** >80% of PRD sections accepted without major changes
+- **Metric 3:** PM satisfaction score >4.5/5
+- **Metric 4:** Reduction in discovery cycle time by >50%
 
 ---
 
@@ -41,454 +22,441 @@ PMs can generate a high-quality, structured PRD draft in minutes, grounded in cu
 
 ### 2.1 Core Capabilities
 
-| Capability | Description | Priority | Complexity |
-|-----------|-------------|----------|------------|
-| Domain Configuration | Sets business & product domain for contextual relevance | Must-have | Low |
-| External Market Search | Searches web/APIs for trends & competitors to provide up-to-date insights | Must-have | Medium |
-| Persona Generation | Defines key user personas for user-centric PRDs | Must-have | Medium |
-| Problem Framing | Structures problem statements for clarity & alignment | Must-have | Medium |
-| PRD Generation | Creates full PRD draft (core value proposition) | Must-have | High |
-| Iterative Refinement | Adjusts PRD via chat for collaboration | Nice-to-have | Medium |
+**Capability 1: Domain Configuration**
+- **Description:** Sets business and product domain context for specialized PRD generation
+- **Input:** Domain definition (e.g., "B2C public transit navigation app")
+- **Output:** Domain profile with relevant market characteristics
+- **Priority:** Critical
 
-**Agent Strengths:**
-- Understanding natural language product ideas
-- Domain-specific reasoning (e.g., B2C mobility apps)
-- Market and competitor analysis
-- Generating structured, opinionated PRDs
+**Capability 2: External Market Search**
+- **Description:** Searches web/APIs for market trends, competitive landscape, and industry insights
+- **Input:** Product idea query + domain context
+- **Output:** Market summary with recent trends, competitors, and relevant features
+- **Priority:** Critical
 
-### 2.2 User Workflows
+**Capability 3: Persona Generation**
+- **Description:** Defines key user personas based on domain and product assumptions
+- **Input:** Domain profile + user assumptions
+- **Output:** Structured user personas with needs, pain points, and behaviors
+- **Priority:** Critical
 
-**Primary Workflow: Product Manager Creating PRD**
+**Capability 4: Problem Framing**
+- **Description:** Structures clear problem statements with impact and success criteria
+- **Input:** Product idea + user context
+- **Output:** Problem statement section for PRD
+- **Priority:** Critical
 
-**Trigger:** New feature idea or strategic initiative (e.g., "real-time crowding insights" for transit app)
+**Capability 5: PRD Generation**
+- **Description:** Creates comprehensive PRD draft from synthesized research data
+- **Input:** All gathered data (market, users, problem framing)
+- **Output:** Complete PRD document following best practices
+- **Priority:** Critical
 
-**Steps:**
-1. PM inputs high-level product idea + domain context
-2. Agent performs domain configuration and validation
-3. Agent conducts external market research and competitive analysis
-4. Agent generates user personas based on domain and assumptions
-5. Agent frames the problem statement with clear success criteria
-6. Agent synthesizes all data and generates structured PRD draft
-7. PM reviews and requests iterative refinements (optional)
-8. Final PRD ready for stakeholder review
+**Capability 6: Iterative Refinement**
+- **Description:** Adjusts and refines PRD through conversational feedback
+- **Input:** User feedback on PRD draft
+- **Output:** Updated PRD sections
+- **Priority:** High (Nice-to-have)
 
-**Pain Points Addressed:**
-- Eliminates time-consuming manual research
-- Provides single source of truth
-- Ensures up-to-date market trends
-- Standardizes PRD structure and depth
+### 2.2 Use Cases
 
-### 2.3 Domain Requirements
+**Use Case 1: New Feature Discovery**
+- **Actor:** Product Manager
+- **Trigger:** New feature idea or strategic initiative (e.g., "Add real-time crowding insights to transit app")
+- **Flow:**
+  1. PM inputs feature idea and domain
+  2. Agent performs market and competitive research
+  3. Agent generates user personas and problem framing
+  4. Agent produces structured PRD draft
+  5. PM reviews and requests refinements
+- **Outcome:** Stakeholder-ready PRD in minutes
 
-**Initial Domain:** B2C Public Transit Navigation Apps
-- Similar to Google Maps transit features, Moovit, Citymapper
-- User base: Daily commuters, occasional travelers
-- Key features: Real-time updates, route planning, crowding data, multi-modal transit
-- Competitive landscape: Established players with extensive data
+**Use Case 2: Competitive Analysis for PRD**
+- **Actor:** Product Lead
+- **Trigger:** Need to understand competitive landscape for strategic planning
+- **Flow:**
+  1. Input domain and feature category
+  2. Agent researches competitor offerings
+  3. Agent synthesizes insights into PRD format
+  4. Stakeholders review for strategic decisions
+- **Outcome:** PRD with comprehensive competitive context
 
-**Domain Knowledge Required:**
-- Transit industry terminology and concepts
-- User behavior patterns for navigation apps
-- Competitive feature sets in mobility space
-- Regulatory and operational constraints in public transit
-- Common user pain points (delays, crowding, accessibility)
+**Use Case 3: Persona-Driven Feature Definition**
+- **Actor:** UX Researcher supporting PM
+- **Trigger:** Need to validate user assumptions before feature development
+- **Flow:**
+  1. Input high-level feature concept
+  2. Agent generates evidence-based personas
+  3. Agent maps user needs to feature requirements
+  4. Team validates assumptions
+- **Outcome:** User-centric PRD with clear persona mapping
+
+### 2.3 Decision-Making Framework
+
+**Decision Type:** Hybrid (Generative + Analytical)
+- **Criteria:**
+  - Market data recency (<6 months preferred)
+  - Competitive feature relevance to domain
+  - User persona alignment with target audience
+  - PRD completeness (all required sections populated)
+- **Confidence Threshold:**
+  - High confidence (>80%): Auto-generate PRD
+  - Medium confidence (60-80%): Flag assumptions, generate with caveats
+  - Low confidence (<60%): Request more user input before generation
+- **Fallback:** When market data is insufficient, clearly mark assumptions and recommend manual research areas
+
+### 2.4 Out of Scope
+
+- Real-time collaboration/multi-user editing
+- Direct integration with project management tools (Jira, Asana)
+- Automated PRD approval workflows
+- Technical feasibility analysis or engineering estimation
+- Legal or compliance review
+- Financial/budget analysis
+- Product roadmap prioritization across multiple features
 
 ---
 
 ## 3. Technical Architecture
 
-### 3.1 Agent Architecture
+### 3.1 System Components
 
-**Architecture Pattern:** Multi-stage Pipeline with External Tool Integration
+| Component | Purpose |
+|-----------|---------|
+| **Input Parser** | Extracts domain, feature idea, and constraints from user input |
+| **Domain Profiler** | Builds contextual profile from domain definition |
+| **Market Research Module** | Interfaces with web search/APIs for competitive and trend analysis |
+| **Persona Generator** | Creates user personas from domain + research data |
+| **Problem Framing Engine** | Structures problem statements and success criteria |
+| **PRD Composer** | Assembles all components into structured PRD document |
+| **Refinement Interface** | Handles conversational updates to generated PRD |
+| **Output Formatter** | Ensures PRD follows organizational templates and standards |
 
-**Components:**
-1. **Input Parser:** Processes natural language product ideas and domain definitions
-2. **Domain Configuration Module:** Establishes domain context and constraints
-3. **Research Orchestrator:** Coordinates external market research and data gathering
-4. **Synthesis Engine:** Analyzes and combines research data with user inputs
-5. **PRD Generator:** Creates structured PRD document from synthesized data
-6. **Refinement Handler:** Manages iterative feedback and updates (conversational layer)
+### 3.2 Data Flow
 
-**Data Flow:**
 ```
-User Input → Domain Config → External Research → Data Synthesis → PRD Generation → Output
-                                    ↓
-                              [Optional: Iterative Refinement Loop]
+[User Input: Feature Idea + Domain]
+    ↓
+[Input Parser] → Extract structured parameters
+    ↓
+[Domain Profiler] → Build domain context
+    ↓
+[Market Research Module] → External API/Web Search → Market insights
+    ↓
+[Persona Generator] ← Domain context + Market data → User personas
+    ↓
+[Problem Framing Engine] ← All prior data → Problem statement
+    ↓
+[PRD Composer] ← All components → Draft PRD
+    ↓
+[Output Formatter] → Structured PRD document
+    ↓
+[Refinement Interface] ← User feedback → [PRD Composer] (iteration loop)
+    ↓
+[Final PRD Output]
 ```
 
-### 3.2 Tools & Integrations
+### 3.3 State Management
 
-**External Tools (Must-have):**
-- **Web Search API:** For real-time market trends and competitor analysis
-- **Market Intelligence API:** App store insights, public reports, industry data
-- **Document Generation:** Structured markdown/document formatting
-
-**Potential Integrations (Nice-to-have):**
-- Product management tools (Jira, Productboard, Aha!)
-- Collaboration platforms (Slack, Teams) for notifications
-- Version control for PRD history
-- Analytics platforms for usage tracking
-
-### 3.3 Data Requirements
-
-**Input Data:**
-- Product idea (natural language text)
-- Domain definition (structured or free-text)
-- User constraints and assumptions (optional)
-- Historical PRD examples (for style reference)
-
-**External Data Sources:**
-- Web search results (market trends, news, reports)
-- Competitor websites and app listings
-- Industry reports and whitepapers
-- User review data (app stores, forums)
-
-**Output Data:**
-- Structured PRD document (markdown format)
-- Supporting research summaries
-- Generated personas and problem statements
-
-**Data Storage:**
-- Domain configurations (persistent)
-- PRD drafts and versions (persistent)
-- Research cache (temporary, for performance)
-
-### 3.4 Dependencies
-
-**Critical Dependencies:**
-- LLM with strong generative and analytical capabilities
-- Web search API access with reasonable rate limits
-- Document formatting capabilities
-
-**Assumptions:**
-- Search APIs return relevant and recent results
-- Domain definition is sufficiently specific
-- User provides meaningful product ideas (not too vague)
-
-**Risk Mitigation:**
-- Fallback to cached/historical data if API fails
-- Clear error messages for insufficient inputs
-- Domain validation before research begins
+- **Stateful?** Yes
+- **State Data:**
+  - Current session context (domain, user inputs)
+  - Research cache (market data, competitor info)
+  - PRD draft versions (for iterative refinement)
+  - User preferences (template style, depth of detail)
+- **Persistence:** In-memory for session; Redis for cross-session caching of market data
+- **Lifecycle:** Session duration (cleared after PRD finalization); Market cache TTL: 7 days
 
 ---
 
 ## 4. Input/Output Specifications
 
-### 4.1 Input Format
+### 4.1 Input Schema
 
-**Required Inputs:**
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| feature_idea | string | Yes | High-level description of feature or initiative |
+| domain | string | Yes | Business domain (e.g., "B2C public transit app") |
+| target_users | string | No | Specific user segments (default: inferred from domain) |
+| constraints | object | No | Budget, timeline, technical limitations |
+| template_preference | string | No | PRD format style (default: standard) |
+| depth_level | enum | No | "quick", "standard", "comprehensive" (default: standard) |
+
+**Validation Rules:**
+- `feature_idea`: Minimum 10 characters, maximum 500 characters
+- `domain`: Must match supported domain categories or be free-text
+- `depth_level`: Determines research breadth (quick: <5 sources, standard: 10-15 sources, comprehensive: 20+ sources)
+- `constraints.budget`: Optional numeric value with currency
+- `constraints.timeline`: Optional string (e.g., "Q2 2025", "3 months")
+
+**Example Input:**
 ```json
 {
-  "product_idea": "string (natural language description of feature/product)",
-  "domain": {
-    "industry": "string (e.g., 'B2C Public Transit Navigation')",
-    "target_market": "string (e.g., 'Daily commuters, occasional travelers')",
-    "comparable_products": ["string array of competitor names"]
+  "feature_idea": "Add real-time crowding insights to help users avoid packed trains during rush hour",
+  "domain": "B2C - Public transit navigation app",
+  "target_users": "Daily commuters in metro areas",
+  "depth_level": "standard"
+}
+```
+
+### 4.2 Output Schema
+
+| Field | Type | Description |
+|-------|------|-------------|
+| prd_document | object | Complete PRD structure |
+| prd_document.title | string | Feature name |
+| prd_document.problem_statement | string | Problem definition |
+| prd_document.target_users | array | User personas |
+| prd_document.market_context | object | Competitive landscape, trends |
+| prd_document.solution_overview | string | High-level approach |
+| prd_document.requirements | array | Functional and non-functional requirements |
+| prd_document.success_metrics | array | KPIs and measurement approach |
+| prd_document.assumptions | array | Explicit assumptions made |
+| metadata | object | Generation metadata |
+| metadata.confidence_score | number | 0-1 confidence in PRD quality |
+| metadata.sources | array | Research sources used |
+| metadata.timestamp | string | ISO 8601 timestamp |
+| metadata.agent_version | string | Agent version identifier |
+
+**Example Output:**
+```json
+{
+  "prd_document": {
+    "title": "Real-Time Crowding Insights for Commuters",
+    "problem_statement": "Daily commuters lack real-time information about train crowding...",
+    "target_users": [
+      {
+        "persona": "Metro Commuter Maria",
+        "needs": ["Avoid crowded trains", "Predictable commute time"],
+        "pain_points": ["Surprise crowding", "Delayed arrivals"]
+      }
+    ],
+    "market_context": {
+      "competitors": ["Google Maps", "Citymapper", "Moovit"],
+      "trends": ["Real-time data demand", "AI-powered predictions"]
+    },
+    "requirements": [...]
+  },
+  "metadata": {
+    "confidence_score": 0.87,
+    "sources": ["Web search (10 sources)", "Competitor analysis", "Domain knowledge"],
+    "timestamp": "2026-01-20T10:30:00Z"
   }
 }
 ```
-
-**Optional Inputs:**
-```json
-{
-  "constraints": ["list of known constraints or requirements"],
-  "assumptions": ["list of assumptions to validate"],
-  "style_reference": "PRD template or example to follow",
-  "depth_preference": "quick | standard | comprehensive"
-}
-```
-
-**Example Input:**
-```
-Product Idea: "Add real-time crowding insights to help commuters choose less crowded train cars"
-Domain: B2C Public Transit Navigation (similar to Moovit)
-Competitors: Google Maps, Citymapper, Transit App
-```
-
-### 4.2 Output Format
-
-**Primary Output: Structured PRD Document**
-
-**PRD Sections:**
-1. **Problem Statement** - Clear definition of user problem and impact
-2. **User Personas** - Key user types with needs and behaviors
-3. **Market Context** - Competitive landscape and trends
-4. **Solution Overview** - High-level approach and key features
-5. **Requirements** - Functional and non-functional requirements
-6. **Success Metrics** - KPIs and measurement approach
-7. **Assumptions & Risks** - Known uncertainties and mitigation
-8. **Scope** - What's in/out for MVP
-
-**Secondary Outputs:**
-- Research summary (market findings, competitor analysis)
-- Confidence scores for key assumptions
-- Open questions requiring stakeholder input
-
-**Format:** Markdown document with structured sections, tables, and bullet points
-
-### 4.3 Interaction Model
-
-**Interaction Pattern:** Conversational with structured output
-
-**Phase 1: Initial Request**
-- User provides product idea and domain context
-- Agent confirms understanding and requests any missing critical inputs
-
-**Phase 2: Processing**
-- Agent performs research (may take 30-60 seconds)
-- Agent provides status updates during research
-
-**Phase 3: PRD Generation**
-- Agent generates structured PRD draft
-- Agent highlights areas with low confidence or missing information
-
-**Phase 4: Refinement (Optional)**
-- User reviews PRD and requests changes
-- Agent updates specific sections based on feedback
-- Iterative conversation until PRD is acceptable
-
-**Interaction Channels:**
-- Primary: Chat/conversational interface
-- Secondary: API for programmatic access (future)
 
 ---
 
 ## 5. Quality & Success Criteria
 
-### 5.1 Quality Standards
+### 5.1 Quality Requirements
 
-**Definition of "Good" PRD:**
-- Clear and structured with logical flow
-- Actionable with specific requirements
-- Grounded in explicit market and user assumptions
-- Stakeholders can make go/no-go decisions based on content
+**Accuracy:**
+- **Target:** >85% accuracy in market insights (verified against known competitors and trends)
+- **Measurement:** Expert PM review of generated PRDs against manual research baseline
+- **Error Cost:**
+  - False competitive features: Medium (misleads strategy)
+  - Hallucinated competitors: High (damages credibility)
+  - Missing key competitors: Medium (incomplete analysis)
+  - Incorrect user needs: High (misaligned product)
 
-**Quality Criteria:**
+**Completeness:**
+- All required PRD sections populated with substantive content (no "TBD" unless explicitly unavailable)
+- Minimum 3 user personas for B2C products
+- Minimum 5 competitive references per market analysis
+- Clear separation between facts and assumptions
 
-| Dimension | Standard |
+**Clarity:**
+- Problem statements pass stakeholder comprehension test (>90% clarity rating)
+- Requirements are specific and actionable (not vague)
+- Success metrics are measurable with defined targets
+
+**Performance:**
+- **Response Time:** <5 minutes for standard depth PRD generation
+- **Throughput:** Support 10 concurrent PRD generation sessions
+- **Availability:** 99.5% uptime during business hours
+
+**Consistency:**
+- PRD structure follows organizational template standards
+- Terminology consistent with domain conventions
+- Formatting uniform across all generated sections
+
+### 5.2 Success Metrics
+
+**Primary Metric:**
+- **Name:** PRD Acceptance Rate
+- **Definition:** Percentage of PRD sections accepted without major revisions by PM reviewers
+- **Target:** >80% acceptance rate
+- **Frequency:** Weekly evaluation on sample of 10 PRDs
+
+**Secondary Metrics:**
+
+| Metric | Target | Measurement |
+|--------|--------|-------------|
+| Time to First Draft | <5 minutes | Automated timestamp tracking |
+| PM Satisfaction Score | >4.5/5 | Post-generation survey |
+| Discovery Cycle Reduction | >50% | Compare pre/post-agent adoption timelines |
+| Research Source Diversity | >10 unique sources | Audit metadata.sources field |
+| Confidence Score Accuracy | Correlation >0.7 | Compare confidence to actual acceptance rate |
+| Iteration Rate | <2 refinements per PRD | Track refinement requests per session |
+
+**Leading Indicators:**
+- Market data freshness (<30 days on average)
+- User engagement (PRDs downloaded/shared)
+- Feature parity with manual PRDs (structural completeness)
+
+---
+
+## 6. Edge Cases & Confidence
+
+### 6.1 Edge Case Handling
+
+| Edge Case | Behavior |
 |-----------|----------|
-| **Accuracy** | Market insights are recent and relevant; no hallucinated competitors or features |
-| **Clarity** | Problem statement and solution are understandable by all stakeholders |
-| **Completeness** | All standard PRD sections present with meaningful content |
-| **Fact vs. Assumption** | Clear separation between validated facts and assumptions |
-| **Actionability** | Requirements specific enough for engineering to estimate |
-| **Domain Relevance** | Content reflects domain-specific knowledge and context |
+| **Vague feature idea** | Request clarification with specific questions; generate preliminary PRD with assumptions flagged |
+| **Unsupported domain** | Proceed with generic market research; warn about reduced domain-specific insights |
+| **No market data available** | Generate PRD based on general principles; clearly mark all assumptions; recommend manual research areas |
+| **Ambiguous user segment** | Generate multiple persona variants; ask user to select most relevant |
+| **Contradictory input** | Highlight contradictions; ask for resolution before PRD generation |
+| **External API timeout** | Fall back to cached data (if available) or general knowledge; reduce confidence score |
+| **Very broad feature scope** | Suggest breaking into multiple PRDs; proceed with high-level overview if user confirms |
+| **Niche/emerging market** | Rely more on analogous markets; clearly state limited direct competitive data |
+| **Multi-domain product** | Prioritize primary domain; note cross-domain considerations in assumptions |
+| **Input exceeds token limits** | Summarize input; confirm summarization accuracy with user before proceeding |
 
-**Red Flags (Must Avoid):**
-- Outdated or incorrect market data
-- Vague problem statements
-- Missing success metrics
-- Uncited competitive claims
-- Generic content not tailored to domain
+### 6.2 Confidence Thresholds
 
-### 5.2 Performance Metrics
+**Overall PRD Confidence Score (Composite):**
 
-**Primary KPIs:**
-- **Time to First Draft:** Target < 5 minutes from input to complete PRD
-- **Acceptance Rate:** % of PRD sections accepted without changes (target: >70%)
-- **PM Satisfaction Score:** User rating 1-5 (target: >4.0)
-- **Discovery Cycle Reduction:** % decrease in time from idea to stakeholder approval (target: 50% reduction)
+- **High (>80%):**
+  - Auto-proceed with PRD generation
+  - Market data is recent (<3 months) and abundant (>10 sources)
+  - Domain is well-supported with clear patterns
+  - User input is specific and complete
+  - **Action:** Generate full PRD without warnings
 
-**Quality Metrics:**
-- **Research Relevance:** % of cited sources deemed relevant by PM (target: >80%)
-- **Assumption Accuracy:** % of assumptions validated by PM as reasonable (target: >75%)
-- **Edit Depth:** Average number of major edits required (target: <3)
+- **Medium (60-80%):**
+  - Generate PRD with assumption flags
+  - Some market data gaps or older data (3-12 months)
+  - Domain is partially supported
+  - User input requires some inference
+  - **Action:** Generate PRD + highlight assumptions section + suggest validation steps
 
-**Adoption Metrics:**
-- Weekly active PMs using the agent
-- PRDs generated per PM
-- Repeat usage rate
+- **Low (<60%):**
+  - Request additional input before generation
+  - Insufficient market data or very old data (>12 months)
+  - Domain poorly understood or unsupported
+  - Critical input parameters missing
+  - **Action:** Ask clarifying questions; offer to generate "draft outline" only; recommend manual research
 
-### 5.3 Validation Approach
+**Component-Level Confidence:**
+- **Market Analysis:** Based on source count, recency, and relevance
+- **Persona Validity:** Based on domain data quality and user input specificity
+- **Competitive Intelligence:** Based on competitor data availability and verification
+- **Requirements Specificity:** Based on input clarity and domain precedents
 
-**Pre-Launch Validation:**
-1. **Expert Review:** Product leaders review sample PRDs against manual benchmarks
-2. **Comparative Testing:** Side-by-side comparison with manually created PRDs
-3. **Domain Accuracy Check:** Transit domain experts validate domain-specific content
-
-**Post-Launch Validation:**
-1. **User Feedback Collection:** Post-generation survey on quality and usefulness
-2. **Stakeholder Acceptance Tracking:** Measure how many PRDs get approved vs. rejected
-3. **Iteration Analysis:** Track number and type of refinement requests
-4. **A/B Testing:** Compare outcomes for agent-generated vs. manual PRDs
-
-**Continuous Monitoring:**
-- Track quality metrics dashboard
-- Weekly review of low-rated PRDs
-- Monthly analysis of common failure patterns
-- Quarterly domain knowledge updates
-
----
-
-## 6. Edge Cases & Confidence Thresholds
-
-### 6.1 Known Limitations
-
-**What the Agent Cannot Do:**
-- Generate PRDs for domains it hasn't been configured for (beyond B2C transit initially)
-- Validate technical feasibility without engineering input
-- Access proprietary internal data or systems
-- Make strategic business decisions (can only inform them)
-- Replace PM judgment on prioritization or trade-offs
-
-**Scope Boundaries:**
-- Focus is MVA (Minimum Viable Agent): PRD v1 generation
-- Does not include project management or execution planning
-- Does not integrate with internal roadmap tools (initially)
-- Limited to English language PRDs
-
-### 6.2 Edge Cases
-
-| Edge Case | Impact | Handling Strategy |
-|-----------|--------|-------------------|
-| **Vague Product Ideas** | Poor PRD quality | Request clarification; provide examples of good inputs |
-| **No Recent Market Data** | Outdated insights | Flag data freshness; use cached data with disclaimer |
-| **Novel/Emerging Domain** | Limited competitive context | Focus on user needs; highlight research gaps |
-| **Conflicting Requirements** | Confusing PRD | Surface conflicts explicitly; ask user to prioritize |
-| **API Rate Limiting** | Incomplete research | Use cached data; retry with backoff; notify user |
-| **Highly Regulated Industry** | Missing compliance context | Flag regulatory considerations as "requires expert input" |
-| **Multiple Target Personas** | Unfocused PRD | Prioritize primary persona; list others as secondary |
-
-### 6.3 Confidence & Fallbacks
-
-**Confidence Scoring:**
-Each PRD section includes confidence indicators:
-- **High (>80%):** Based on strong market data or explicit user input
-- **Medium (50-80%):** Reasonable inference with some data gaps
-- **Low (<50%):** Assumptions requiring validation
-
-**Confidence Thresholds:**
-- If overall confidence < 60%, flag PRD as "draft requiring validation"
-- If critical sections (problem, success metrics) < 50%, prompt user for more input
-
-**Fallback Strategies:**
-
-1. **Insufficient Market Data**
-   - Use general domain knowledge
-   - Clearly mark assumptions
-   - Suggest manual research areas
-
-2. **API Failures**
-   - Retry with exponential backoff
-   - Use cached recent data
-   - Notify user of limitations
-   - Offer to regenerate when service recovers
-
-3. **Ambiguous Input**
-   - Ask clarifying questions before generating
-   - Generate multiple interpretations for user to choose
-   - Provide example inputs for guidance
-
-4. **Domain Mismatch**
-   - Detect domain incompatibility early
-   - Suggest supported domains
-   - Offer generic PRD with reduced domain specificity
-
-**Escalation Criteria:**
-- User dissatisfaction with 2+ regeneration attempts
-- Critical data unavailable despite retries
-- Regulatory or legal considerations detected
-- Strategic ambiguity requiring executive input
+**Confidence Reporting:**
+```json
+{
+  "overall_confidence": 0.78,
+  "component_confidence": {
+    "market_analysis": 0.85,
+    "persona_generation": 0.72,
+    "competitive_intelligence": 0.80,
+    "requirements": 0.75
+  },
+  "risk_factors": [
+    "Limited data for emerging market segment",
+    "User segment assumptions based on analogous products"
+  ],
+  "recommended_actions": [
+    "Validate personas with user research",
+    "Conduct additional competitive analysis for Feature X"
+  ]
+}
+```
 
 ---
 
-## 7. Testing Strategy
+## 7. Testing & Validation
 
-### 7.1 Test Scenarios
+### 7.1 Test Strategy
 
-**Unit Testing:**
-- Domain configuration validation
-- Input parsing and sanitization
-- API response handling and error cases
-- PRD section generation logic
-- Confidence score calculation
+**End-to-End Testing:**
+- Generate PRDs for 20+ diverse feature scenarios across multiple domains
+- Compare agent output to manually created PRDs (baseline)
+- Stakeholder blind review (PM experts rate both without knowing source)
+- Measure: structural completeness, insight quality, actionability
 
-**Integration Testing:**
-- External API integration (search, market data)
-- End-to-end PRD generation flow
-- Iterative refinement workflow
-- Data caching and retrieval
+**Accuracy Testing:**
+- Validate market insights against known competitive benchmarks
+- Cross-reference generated competitors with actual market data
+- Verify persona characteristics against user research studies (where available)
+- Test on historical features with known outcomes
 
-**Functional Testing:**
+**Edge Case Testing:**
+- Vague inputs: "Make the app better"
+- Novel domains: "Web3 decentralized identity for pets"
+- Data-poor markets: "B2B industrial robotics in emerging markets"
+- Contradictory inputs: "Low-cost premium feature"
+- Extreme inputs: Very long feature descriptions, minimal input
 
-| Test Scenario | Input | Expected Outcome |
-|--------------|-------|------------------|
-| **Happy Path** | Clear product idea + domain | Complete PRD with high confidence in < 5 min |
-| **Vague Input** | Ambiguous product idea | Agent requests clarification before generating |
-| **API Failure** | Valid input, API down | Fallback to cached data with warning |
-| **Domain Mismatch** | Idea outside configured domain | Early warning and domain suggestion |
-| **Iterative Refinement** | PRD + refinement request | Updated PRD with changes tracked |
-| **Novel Feature** | New concept with limited market data | PRD with lower confidence, explicit assumptions |
+**Performance Testing:**
+- Load testing: 50 concurrent PRD generation requests
+- Latency testing: Measure p50, p95, p99 response times
+- API resilience: Simulate external search API failures
+- Cache effectiveness: Measure cache hit rates and performance gains
 
-**User Acceptance Testing:**
-- PM creates PRD for recent feature launch
-- Product Lead reviews 3 PRDs from different PMs
-- Engineering Lead assesses requirement clarity
-- UX Researcher validates persona accuracy
+**Regression Testing:**
+- Maintain golden dataset of 50 validated PRDs
+- Re-run monthly to ensure output quality consistency
+- Track confidence score calibration over time
 
-### 7.2 Acceptance Criteria
+### 7.2 Test Data
 
-**Before MVA Launch:**
-- ✅ Agent generates complete PRD for transit domain test cases
-- ✅ External market search returns relevant and recent data
-- ✅ No hallucinated competitors or false market claims
-- ✅ Clear fact/assumption separation in all sections
-- ✅ PM satisfaction score > 4.0 in beta testing (n=10)
-- ✅ PRD generation time < 5 minutes for standard inputs
-- ✅ Graceful handling of API failures with appropriate fallbacks
-- ✅ All P0 edge cases have defined handling strategies
-- ✅ Confidence scoring accurately reflects data quality
+**Size:**
+- Initial: 50 validated PRDs across 10 domains
+- Ongoing: Add 5-10 new examples monthly
 
-**Success Criteria (4 weeks post-launch):**
-- 70% of PRD sections accepted without changes
-- 50% reduction in discovery cycle time
-- 80% of PMs report value in weekly usage survey
-- 85% research source relevance rating
+**Sources:**
+- Internal historical PRDs (anonymized)
+- Open-source product documentation
+- Published case studies (e.g., ProductHunt, tech blogs)
+- Synthetic scenarios created by PM experts
+
+**Ground Truth:**
+- Expert PM review and annotation
+- Market data verification against public sources
+- Competitive feature verification via app store/website research
+- User persona validation against published research
+
+**Test Coverage by Domain:**
+- B2C Consumer Apps: 20%
+- B2B SaaS: 20%
+- E-commerce: 15%
+- FinTech: 15%
+- Healthcare: 10%
+- Education: 10%
+- Other: 10%
 
 ---
 
-## 8. Appendices
+## Appendix
 
-### 8.1 Open Questions
+### Glossary
 
-**Domain Coverage:**
-- What additional domains should be prioritized after B2C transit? (e.g., FinTech, HealthTech, EdTech)
-- How do we validate domain expansions without diluting quality?
+- **PRD (Product Requirements Document):** Structured document defining product features, user needs, and success criteria
+- **Domain Profile:** Contextual business and market characteristics for a specific product category
+- **Persona:** Archetypal user representation with needs, behaviors, and pain points
+- **Market Context:** Competitive landscape, industry trends, and positioning
+- **Confidence Score:** Agent's self-assessment of output quality and completeness (0-1 scale)
+- **Discovery Cycle:** Time from feature ideation to PRD approval for development
+- **Stakeholder:** Anyone involved in product decisions (PMs, Leads, Engineers, UX Researchers)
 
-**Research Depth:**
-- What is the optimal depth of market research vs. generation speed?
-- Should we offer tiered research options (quick/standard/deep)?
+### References
 
-**Integration:**
-- Which PM tools should be prioritized for integration?
-- Should PRDs be versioned in Git or specialized PM tools?
-
-**Collaboration:**
-- How should multi-PM collaboration on a single PRD work?
-- Should the agent support commenting and review workflows?
-
-**Compliance:**
-- What regulatory/legal considerations exist for automated PRD generation?
-- How do we ensure data privacy for proprietary product ideas?
-
-### 8.2 Future Enhancements
-
-**Phase 2 (Nice-to-Have):**
-- Multi-domain support beyond B2C transit
-- Integration with product management tools (Jira, Productboard)
-- PRD version history and comparison
-- Team collaboration features (comments, approvals)
-- Custom PRD templates per organization
-
-**Phase 3 (Long-term):**
-- Multi-language PRD generation
-- Video/presentation generation from PRD
-- Automated competitor monitoring and PRD updates
-- Integration with analytics for post-launch success tracking
-- AI-suggested feature prioritization based on market trends
-
-**Technical Debt:**
-- Evaluate additional market intelligence data sources
-- Improve caching strategy for frequently researched domains
-- Optimize LLM prompting for consistency and quality
-- Build comprehensive test suite for regression prevention
+- [Product Management Best Practices Guide](#) (Internal)
+- [PRD Template Standards](#) (Internal)
+- Web Search APIs: Integration documentation
+- Competitive Intelligence Sources: App stores, product review sites, tech press
+- User Research Methodologies: Persona creation frameworks
